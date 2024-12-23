@@ -17,25 +17,25 @@
             <span class="hamburger"></span>
         </button>
         <div class="nav-menu" id="nav-menu">
-            <button id="scoreboard-players">Scoreboard Joueurs</button>
-            <button id="scoreboard-games">Scoreboard Jeux</button>
+            <button id="scoreboard-players">Scoreboard Players</button>
+            <button id="scoreboard-games">Scoreboard Games</button>
             <button data-game="all" id="scoreboard-total">Scoreboard Total</button>
-            <button id="dl">Télécharger</button>
+            <button id="dl">Download</button>
         </div>
     </div>
     <div class="navbar-right">
         <div class="search-container">
-            <input type="text" id="search-player-box" placeholder="Rechercher un joueur...">
-            <input type="text" id="search-game-box" placeholder="Rechercher un jeu...">
-            <button id="sort-time" data-order="desc" class="sort-button">Trier par...</button>
+            <input type="text" id="search-player-box" placeholder="Search player...">
+            <input type="text" id="search-game-box" placeholder="Search game...">
+            <button id="sort-time" data-order="desc" class="sort-button">Sort by...</button>
         </div>
     </div>
 </div>
 
 <div id="welcome-page">
-    <h1>Bienvenue sur IGN - Instagram Note Integration</h1>
-    <p>Suivez et comparez vos temps de jeu</p>
-    <button id="enter-button">Accéder au site</button>
+    <h1>Welcome to IGN - Instagram Note Integration</h1>
+    <p>See and compare your game sessions</p>
+    <button id="enter-button">Enter website</button>
 </div>
 
 <!-- Conteneur principal -->
@@ -45,10 +45,9 @@
         <table id="game-sessions-table">
             <thead>
             <tr>
-                <th>Nom du jeu</th>
-                <th>Nom du joueur</th>
-                <th>Durée totale (minutes)</th>
-            </tr>
+                <th>Game Name</th>
+                <th>Player Name</th>
+                <th>Total Time (minutes)</th>            </tr>
             </thead>
             <tbody>
             <!-- Les données seront insérées ici -->
@@ -61,9 +60,8 @@
         <table id="players-sessions-table">
             <thead>
             <tr>
-                <th>Nom du joueur</th>
-                <th>Durée totale (minutes)</th>
-            </tr>
+                <th>Player Name</th>
+                <th>Total Time (minutes)</th>            </tr>
             </thead>
             <tbody>
             <!-- Les données seront insérées ici -->
@@ -73,7 +71,7 @@
 
     <!-- Liste des jeux (barre latérale) -->
     <div class="sidebar" id="game-list">
-        <input type="text" id="search-box" placeholder="Rechercher un jeu...">
+        <input type="text" id="search-box" placeholder="Search game...">
         <ul id="game-list-items">
             <!-- Les boutons de jeux seront insérés ici -->
         </ul>

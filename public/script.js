@@ -16,7 +16,7 @@ fetch('/api/game_sessions')
 
         const groupedArray = Object.values(groupedData);
 
-        // Calculer le temps total pour chaque jeu
+        // Calculate total time for each game
         const gameTotalDurations = groupedArray.reduce((acc, entry) => {
             if (!acc[entry.game_name]) {
                 acc[entry.game_name] = 0;
@@ -25,14 +25,14 @@ fetch('/api/game_sessions')
             return acc;
         }, {});
 
-        // Trier les données par durée totale décroissante
+        // Sort data by total duration in descending order
         const sortedData = groupedArray.sort((a, b) => b.total_duration - a.total_duration);
 
-        // Ajouter les noms de jeux avec leur durée totale dans la sidebar
+        // Add game names with total duration to the sidebar
         const gameNames = [...new Set(groupedArray.map(entry => entry.game_name))];
         generateSidebar(gameNames, gameTotalDurations);
 
-        // Au lieu d'afficher les données totales, on calcule et affiche directement les données des joueurs
+        // Instead of displaying total data, calculate and display player data directly
         const playerData = groupedArray.reduce((acc, entry) => {
             if (!acc[entry.user_name]) {
                 acc[entry.user_name] = 0;
@@ -54,7 +54,7 @@ fetch('/api/game_sessions')
         displayPlayerData(rankedPlayerData);
 
         document.getElementById('dl').addEventListener('click', () => {
-            window.location.href = "https://github.com/gltdevlop/instagramnoteintegration/releases/latest";
+            window.open("https://github.com/gltdevlop/instagramnoteintegration/releases/latest", '_blank').focus();
         });
 
         document.getElementById('search-player-box').addEventListener('input', (event) => {
@@ -63,20 +63,20 @@ fetch('/api/game_sessions')
             filterTableRows(searchTerm, gameSearchTerm);
         });
 
-// Nouveau gestionnaire pour la recherche de jeux
+// New handler for game search
         document.getElementById('search-game-box').addEventListener('input', (event) => {
             const gameSearchTerm = event.target.value.toLowerCase();
             const playerSearchTerm = document.getElementById('search-player-box').value.toLowerCase();
             filterTableRows(playerSearchTerm, gameSearchTerm);
         });
 
-        // Gestion du clic sur Scoreboard Total
+        // Handle click on Scoreboard Total
         document.getElementById('scoreboard-total').addEventListener('click', () => {
-            displayData(sortedData); // Affiche les données globales
-            updateURL('total'); // Met à jour l'URL
+            displayData(sortedData); // Display total data
+            updateURL('total'); // Update URL
             highlightActiveButton('scoreboard-total');
         });
-        // Gestion du clic sur Scoreboard Joueurs
+        // Handle click on Scoreboard Players
         document.getElementById('scoreboard-players').addEventListener('click', () => {
             const playerData = sortedData.reduce((acc, entry) => {
                 if (!acc[entry.user_name]) {
@@ -98,7 +98,7 @@ fetch('/api/game_sessions')
 
             displayPlayerData(rankedPlayerData);
             highlightActiveButton('scoreboard-players');
-            updateURL('players'); // Met à jour l'URL
+            updateURL('players'); // Update URL
         });
 
         let currentSortOrder = 'desc';
@@ -109,10 +109,10 @@ fetch('/api/game_sessions')
 
         document.getElementById('sort-time').addEventListener('click', function() {
             currentSortOrder = currentSortOrder === 'desc' ? 'asc' : 'desc';
-            this.innerHTML = `Tri par temps ${currentSortOrder === 'desc' ? '↓' : '↑'}`;
+            this.innerHTML = `Sort by time ${currentSortOrder === 'desc' ? '↓' : '↑'}`;
             this.setAttribute('data-order', currentSortOrder);
 
-            // Récupérer le tableau actuellement affiché
+            // Get the currently displayed table
             const activeButton = document.querySelector('.navbar button.active');
             if (!activeButton) return;
 
@@ -125,8 +125,8 @@ fetch('/api/game_sessions')
                         const timeStrA = a.lastElementChild.textContent.trim();
                         const timeStrB = b.lastElementChild.textContent.trim();
                         
-                        // Extraire les heures et minutes avec une expression régulière
-                        const regexTime = /(\d+)\s*heure[s]?\s*(\d+)?\s*min/;
+                        // Extract hours and minutes with regex
+                        const regexTime = /(\d+)\s*hour[s]?\s*(\d+)?\s*min/;
                         const matchA = timeStrA.match(regexTime);
                         const matchB = timeStrB.match(regexTime);
                         
@@ -135,14 +135,14 @@ fetch('/api/game_sessions')
                         const hoursB = matchB ? parseInt(matchB[1]) : 0;
                         const minutesB = matchB && matchB[2] ? parseInt(matchB[2]) : 0;
                         
-                        // Convertir en minutes totales
+                        // Convert to total minutes
                         const totalMinutesA = hoursA * 60 + minutesA;
                         const totalMinutesB = hoursB * 60 + minutesB;
                         
                         return currentSortOrder === 'desc' ? totalMinutesB - totalMinutesA : totalMinutesA - totalMinutesB;
                     });
 
-                    // Vider et reremplir le tableau
+                    // Empty and refill the table
                     tableBody.innerHTML = '';
                     rows.forEach(row => tableBody.appendChild(row));
                     break;
@@ -155,17 +155,17 @@ fetch('/api/game_sessions')
                         const timeStrA = a.lastElementChild.textContent.trim();
                         const timeStrB = b.lastElementChild.textContent.trim();
                         
-                        // Extraire les heures et minutes avec une expression régulière
-                        const regexTime = /(\d+)\s*heure[s]?\s*(\d+)?\s*min/;
+                        // Extract hours and minutes with regex
+                        const regexTime = /(\d+)\s*hour[s]?\s*(\d+)?\s*min/;
                         const matchA = timeStrA.match(regexTime);
                         const matchB = timeStrB.match(regexTime);
                         
                         const hoursA = matchA ? parseInt(matchA[1]) : 0;
                         const minutesA = matchA && matchA[2] ? parseInt(matchA[2]) : 0;
                         const hoursB = matchB ? parseInt(matchB[1]) : 0;
-                        const minutesB = matchB && matchB[2] ? parseInt(matchB[2]) : 0;
+                        const minutesB = matchB && matchA[2] ? parseInt(matchB[2]) : 0;
                         
-                        // Convertir en minutes totales
+                        // Convert to total minutes
                         const totalMinutesA = hoursA * 60 + minutesA;
                         const totalMinutesB = hoursB * 60 + minutesB;
                         
@@ -184,8 +184,8 @@ fetch('/api/game_sessions')
                         const timeStrA = a.lastElementChild.textContent.trim();
                         const timeStrB = b.lastElementChild.textContent.trim();
                         
-                        // Extraire les heures et minutes avec une expression régulière
-                        const regexTime = /(\d+)\s*heure[s]?\s*(\d+)?\s*min/;
+                        // Extract hours and minutes with regex
+                        const regexTime = /(\d+)\s*hour[s]?\s*(\d+)?\s*min/;
                         const matchA = timeStrA.match(regexTime);
                         const matchB = timeStrB.match(regexTime);
                         
@@ -194,7 +194,7 @@ fetch('/api/game_sessions')
                         const hoursB = matchB ? parseInt(matchB[1]) : 0;
                         const minutesB = matchB && matchA[2] ? parseInt(matchB[2]) : 0;
                         
-                        // Convertir en minutes totales
+                        // Convert to total minutes
                         const totalMinutesA = hoursA * 60 + minutesA;
                         const totalMinutesB = hoursB * 60 + minutesB;
                         
@@ -207,7 +207,7 @@ fetch('/api/game_sessions')
             }
         });
 
-        // Gestion du clic sur Scoreboard Jeux
+        // Handle click on Scoreboard Games
         document.getElementById('scoreboard-games').addEventListener('click', () => {
             const gameData = sortedData.reduce((acc, entry) => {
                 if (!acc[entry.game_name]) {
@@ -227,7 +227,7 @@ fetch('/api/game_sessions')
             displayGameData(gameArray);
         });
 
-        // Gestion du clic sur les jeux dans la sidebar
+        // Handle click on games in the sidebar
         document.getElementById('game-list-items').addEventListener('click', (event) => {
             if (event.target.tagName === 'BUTTON') {
                 const gameName = event.target.dataset.game;
@@ -236,7 +236,7 @@ fetch('/api/game_sessions')
             }
         });
 
-        // Gestion de la recherche
+        // Handle search
         document.getElementById('search-box').addEventListener('input', (event) => {
             const searchTerm = event.target.value.toLowerCase();
             const buttons = document.querySelectorAll('#game-list-items button');
@@ -246,13 +246,13 @@ fetch('/api/game_sessions')
             });
         });
 
-        // Gestion du menu hamburger
+        // Handle hamburger menu
         document.getElementById('menu-toggle').addEventListener('click', function() {
             this.classList.toggle('active');
             document.getElementById('nav-menu').classList.toggle('active');
         });
 
-        // Fermer le menu quand on clique en dehors
+        // Close menu when clicking outside
         document.addEventListener('click', function(event) {
             const menu = document.getElementById('nav-menu');
             const menuToggle = document.getElementById('menu-toggle');
@@ -263,7 +263,7 @@ fetch('/api/game_sessions')
             }
         });
 
-        // Fermer le menu après avoir cliqué sur un bouton
+        // Close menu after clicking on a button
         document.querySelectorAll('.nav-menu button').forEach(button => {
             button.addEventListener('click', () => {
                 document.getElementById('nav-menu').classList.remove('active');
@@ -271,7 +271,7 @@ fetch('/api/game_sessions')
             });
         });
     })
-    .catch(error => console.error('Erreur:', error));
+    .catch(error => console.error('Error:', error));
 
 function filterTableRows(playerSearchTerm, gameSearchTerm) {
     const gameSessionsContainer = document.getElementById('game-sessions-container');
@@ -286,22 +286,22 @@ function filterTableRows(playerSearchTerm, gameSearchTerm) {
             let gameText = '';
 
             if (columns.length === 3) {
-                // Tableau des sessions totales
-                gameText = columns[0].textContent.toLowerCase(); // Nom du jeu
-                playerText = columns[1].textContent.toLowerCase(); // Nom du joueur
+                // Total sessions table
+                gameText = columns[0].textContent.toLowerCase(); // Game name
+                playerText = columns[1].textContent.toLowerCase(); // Player name
             } else if (columns.length === 2) {
-                // Tableau du scoreboard joueurs ou jeux
+                // Scoreboard players or games table
                 const headerText = document.querySelector('#game-sessions-table thead th').textContent;
-                if (headerText.includes('joueur')) {
-                    // Scoreboard joueurs
+                if (headerText.includes('player')) {
+                    // Scoreboard players
                     playerText = columns[0].textContent.toLowerCase().split('-')[1]?.trim() || '';
                 } else {
-                    // Scoreboard jeux
+                    // Scoreboard games
                     gameText = columns[0].textContent.toLowerCase();
                 }
             }
 
-            // Afficher la ligne seulement si elle correspond aux deux critères de recherche
+            // Display the row only if it matches both search criteria
             const matchesPlayer = playerText.includes(playerSearchTerm);
             const matchesGame = gameText.includes(gameSearchTerm);
             const shouldDisplay = (playerSearchTerm === '' || matchesPlayer) &&
@@ -324,11 +324,16 @@ function sortDataByTime(data, order = 'desc') {
 }
 
 
-// Fonction pour convertir les minutes en heures et minutes
+// Function to convert minutes to hours and minutes
 function convertMinutesToHours(minutes) {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
-    return `${hours} heure${hours !== 1 ? 's' : ''} ${remainingMinutes} min`;
+    if (hours === 0) {
+        return `${remainingMinutes} min`;
+    } else if (remainingMinutes === 0) {
+        return `${hours} hour${hours > 1 ? 's' : ''}`;
+    }
+    return `${hours} hour${hours > 1 ? 's' : ''} ${remainingMinutes} min`;
 }
 
 function updateURL(category) {
@@ -344,7 +349,7 @@ function highlightActiveButton(activeButtonId) {
     document.getElementById(activeButtonId).classList.add('active');
 }
 
-// Gérer le chargement initial
+// Handle initial load
 window.addEventListener('load', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const category = urlParams.get('category') || 'players'; 
@@ -352,23 +357,23 @@ window.addEventListener('load', () => {
 
     switch (category) {
         case 'players':
-            const playerData = calculatePlayerData(sortedData); // Calcule les données des joueurs
-            displayPlayerData(playerData); // Affiche les données des joueurs
+            const playerData = calculatePlayerData(sortedData); // Calculate player data
+            displayPlayerData(playerData); // Display player data
             break;
         case 'games':
-            const gameData = calculateGameData(sortedData); // Calcule les données des jeux
-            displayGameData(gameData); // Affiche les données des jeux
+            const gameData = calculateGameData(sortedData); // Calculate game data
+            displayGameData(gameData); // Display game data
             break;
         case 'total':
         default:
-            displayData(sortedData); // Affiche les données globales par défaut
+            displayData(sortedData); // Display total data by default
             break;
     }
 });
 
 function generateSidebar(gameNames, gameTotalDurations) {
     const gameList = document.getElementById('game-list-items');
-    gameList.innerHTML = ''; // Nettoyer la liste avant de la régénérer
+    gameList.innerHTML = ''; // Clear the list before regenerating it
 
     const sortedGameNames = gameNames.sort((a, b) => (gameTotalDurations[b] || 0) - (gameTotalDurations[a] || 0));
 
@@ -376,22 +381,22 @@ function generateSidebar(gameNames, gameTotalDurations) {
         const button = document.createElement('button');
         const totalDuration = gameTotalDurations[gameName] || 0;
         const formattedDuration = convertMinutesToHours(totalDuration);
-        button.textContent = `${gameName} - ${formattedDuration} au total`;
+        button.textContent = `${gameName} - ${formattedDuration} total`;
         button.dataset.game = gameName;
 
-        // Ajouter un gestionnaire d'événements pour le clic
+        // Add event handler for click
         button.addEventListener('click', function() {
-            // Retirer la classe active de tous les boutons de la liste
+            // Remove active class from all buttons in the list
             const buttons = gameList.querySelectorAll('button');
             buttons.forEach(btn => btn.classList.remove('active'));
             
-            // Ajouter la classe active au bouton cliqué
+            // Add active class to the clicked button
             this.classList.add('active');
 
-            // S'assurer que le bouton Scoreboard Jeux reste actif
+            // Ensure the Scoreboard Games button remains active
             highlightActiveButton('scoreboard-games');
 
-            // Afficher les données des joueurs pour ce jeu
+            // Display player data for this game
             displayGamePlayerData(this.dataset.game);
         });
 
@@ -399,20 +404,20 @@ function generateSidebar(gameNames, gameTotalDurations) {
     }
 }
 
-// Fonction pour afficher les données des joueurs pour un jeu spécifique
+// Function to display player data for a specific game
 function displayGamePlayerData(gameName) {
     const tableBody = document.querySelector('#game-sessions-table tbody');
     tableBody.innerHTML = '';
 
-    // Cacher le conteneur des joueurs et afficher le conteneur des sessions
+    // Hide the players container and display the sessions container
     document.getElementById('players-sessions-container').style.display = 'none';
     document.getElementById('game-sessions-container').style.display = 'block';
 
-    // Filtrer et regrouper les données par joueur pour ce jeu
+    // Filter and group data by player for this game
     fetch('/api/game_sessions')
         .then(response => response.json())
         .then(data => {
-            // Regrouper les données par joueur pour ce jeu spécifique
+            // Group data by player for this specific game
             const playerTimes = data.reduce((acc, session) => {
                 if (session.game_name === gameName) {
                     if (!acc[session.user_name]) {
@@ -423,25 +428,25 @@ function displayGamePlayerData(gameName) {
                 return acc;
             }, {});
 
-            // Convertir en tableau et trier par durée
+            // Convert to array and sort by duration
             const sortedPlayers = Object.entries(playerTimes)
                 .map(([name, total_duration]) => ({ name, total_duration }))
                 .sort((a, b) => b.total_duration - a.total_duration);
 
-            // Vider le tableau avant d'ajouter les nouvelles données
+            // Clear the table before adding new data
             tableBody.innerHTML = '';
 
-            // Afficher les données dans le tableau
+            // Display data in the table
             sortedPlayers.forEach((player, index) => {
                 const row = document.createElement('tr');
 
-                // Appliquer le style pour les 3 premiers joueurs
+                // Apply style for the top 3 players
                 if (index === 0) {
-                    row.style.backgroundColor = '#877619'; // Or
+                    row.style.backgroundColor = '#877619'; // Gold
                     row.style.color = '#000';
                     row.style.fontWeight = 'bold';
                 } else if (index === 1) {
-                    row.style.backgroundColor = '#9a9898'; // Argent
+                    row.style.backgroundColor = '#9a9898'; // Silver
                     row.style.color = '#000';
                     row.style.fontWeight = 'bold';
                 } else if (index === 2) {
@@ -465,22 +470,22 @@ function displayGamePlayerData(gameName) {
                 tableBody.appendChild(row);
             });
 
-            // Mettre à jour l'en-tête du tableau
+            // Update the table header
             const tableHeader = document.querySelector('#game-sessions-table thead');
             tableHeader.innerHTML = `
                 <tr>
-                    <th>Nom du joueur</th>
-                    <th>Jeu</th>
-                    <th>Temps total</th>
+                    <th>Player Name</th>
+                    <th>Game</th>
+                    <th>Total Time</th>
                 </tr>
             `;
         });
 }
 
-// Fonction pour afficher les données des joueurs dans le tableau
+// Function to display player data in the table
 function displayPlayerData(data) {
     const tableBody = document.querySelector('#game-sessions-table tbody');
-    tableBody.innerHTML = '';
+    tableBody.innerHTML = ''; // Clear the table body before displaying it again
 
     const sortOrder = document.getElementById('sort-time').getAttribute('data-order');
     const sortedData = sortDataByTime(data, sortOrder);
@@ -488,19 +493,19 @@ function displayPlayerData(data) {
     data.forEach((entry, index) => {
         const row = document.createElement('tr');
 
-        // Appliquer le style pour les 3 premiers joueurs
+        // Apply style for the top 3 players
         if (index === 0) {
-            row.style.backgroundColor = '#877619'; // Or
-            row.style.color = '#000'; // Texte noir
-            row.style.fontWeight = 'bold'; // Texte en gras
+            row.style.backgroundColor = '#877619'; // Gold
+            row.style.color = '#000'; // Black text
+            row.style.fontWeight = 'bold'; // Bold text
         } else if (index === 1) {
-            row.style.backgroundColor = '#9a9898'; // Argent
-            row.style.color = '#000'; // Texte noir
-            row.style.fontWeight = 'bold'; // Texte en gras
+            row.style.backgroundColor = '#9a9898'; // Silver
+            row.style.color = '#000'; // Black text
+            row.style.fontWeight = 'bold'; // Bold text
         } else if (index === 2) {
             row.style.backgroundColor = '#93500d'; // Bronze
-            row.style.color = '#000'; // Texte noir
-            row.style.fontWeight = 'bold'; // Texte en gras
+            row.style.color = '#000'; // Black text
+            row.style.fontWeight = 'bold'; // Bold text
         }
 
         const rankCell = document.createElement('td');
@@ -517,8 +522,8 @@ function displayPlayerData(data) {
     const tableHeader = document.querySelector('#game-sessions-table thead');
     tableHeader.innerHTML = `
         <tr>
-            <th>Nom du joueur</th>
-            <th>Durée totale</th>
+            <th>Player Name</th>
+            <th>Total Duration</th>
         </tr>
     `;
 
@@ -526,7 +531,7 @@ function displayPlayerData(data) {
     document.getElementById('players-sessions-container').style.display = 'none';
 }
 
-// Fonction pour afficher les données des jeux dans le tableau
+// Function to display game data in the table
 function displayGameData(data) {
     const tableBody = document.querySelector('#game-sessions-table tbody');
     tableBody.innerHTML = '';
@@ -547,12 +552,12 @@ function displayGameData(data) {
         tableBody.appendChild(row);
     }
 
-    // Masquer les colonnes inutilisées pour les jeux
+    // Hide unused columns for games
     const tableHeader = document.querySelector('#game-sessions-table thead');
     tableHeader.innerHTML = `
         <tr>
-            <th>Nom du jeu</th>
-            <th>Temps total (tout joueur confondu)</th>
+            <th>Game Name</th>
+            <th>Total Time (all players)</th>
         </tr>
     `;
 
@@ -560,10 +565,10 @@ function displayGameData(data) {
     document.getElementById('players-sessions-container').style.display = 'none';
 }
 
-// Fonction pour afficher les données dans le tableau des sessions de jeu
+// Function to display data in the game sessions table
 function displayData(data) {
     const tableBody = document.querySelector('#game-sessions-table tbody');
-    tableBody.innerHTML = ''; // Réinitialiser le corps du tableau avant de l'afficher à nouveau
+    tableBody.innerHTML = ''; // Clear the table body before displaying it again
 
     const sortOrder = document.getElementById('sort-time').getAttribute('data-order');
     const sortedData = sortDataByTime(data, sortOrder);
@@ -571,11 +576,11 @@ function displayData(data) {
     for (const entry of data) {
         const row = document.createElement('tr');
 
-        // Nom du jeu
+        // Game name
         const gameNameCell = document.createElement('td');
         gameNameCell.textContent = entry.game_name;
 
-        // Nom du joueur avec lien vers Instagram
+        // Player name with Instagram link
         const userNameCell = document.createElement('td');
         const userLink = document.createElement('a');
         userLink.href = `https://instagram.com/${entry.user_name}`;
@@ -583,24 +588,24 @@ function displayData(data) {
         userLink.target = '_blank';
         userNameCell.appendChild(userLink);
 
-        // Durée totale
+        // Total duration
         const totalDurationCell = document.createElement('td');
         totalDurationCell.textContent = convertMinutesToHours(entry.total_duration);
 
-        // Ajouter les cellules au tableau
+        // Add cells to the table
         row.appendChild(gameNameCell);
         row.appendChild(userNameCell);
         row.appendChild(totalDurationCell);
         tableBody.appendChild(row);
     }
 
-    // Réinitialiser l'en-tête pour les trois colonnes
+    // Reset the header for the three columns
     const tableHeader = document.querySelector('#game-sessions-table thead');
     tableHeader.innerHTML = `
         <tr>
-            <th>Nom du jeu</th>
-            <th>Nom du joueur</th>
-            <th>Durée totale</th>
+            <th>Game Name</th>
+            <th>Player Name</th>
+            <th>Total Duration</th>
         </tr>
     `;
 
