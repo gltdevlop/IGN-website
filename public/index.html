@@ -2,24 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Sessions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>IGN - Instagram Note Integration</title>
+    <link rel="icon" type="image/x-icon" href="icon.ico">
     <link rel="stylesheet" href="styles.css">
+    
 </head>
 <body>
 <!-- Navbar horizontale -->
 <div class="navbar">
     <div class="navbar-left">
-        <img src="icon.ico" alt="Logo" class="navbar-logo">
-        <button data-game="all" id="scoreboard-total">Scoreboard Total</button>
-        <button id="scoreboard-players">Scoreboard Joueurs</button>
-        <button id="scoreboard-games">Scoreboard Jeux</button>
-        <button id="dl">Télécharger</button>
+        <a href="./"><img src="icon.ico" alt="Logo" class="navbar-logo"></a>
+        <button class="menu-toggle" id="menu-toggle">
+            <span class="hamburger"></span>
+        </button>
+        <div class="nav-menu" id="nav-menu">
+            <button id="scoreboard-players">Scoreboard Joueurs</button>
+            <button id="scoreboard-games">Scoreboard Jeux</button>
+            <button data-game="all" id="scoreboard-total">Scoreboard Total</button>
+            <button id="dl">Télécharger</button>
+        </div>
     </div>
     <div class="navbar-right">
-        <button id="sort-time" data-order="desc" class="sort-button">Trier par...</button>
-        <input type="text" id="search-player-box" placeholder="Rechercher un joueur...">
-        <input type="text" id="search-game-box" placeholder="Rechercher un jeu...">
+        <div class="search-container">
+            <input type="text" id="search-player-box" placeholder="Rechercher un joueur...">
+            <input type="text" id="search-game-box" placeholder="Rechercher un jeu...">
+            <button id="sort-time" data-order="desc" class="sort-button">Trier par...</button>
+        </div>
     </div>
 </div>
 
