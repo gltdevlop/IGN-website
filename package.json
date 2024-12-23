@@ -1,12 +1,9 @@
 {
   "name": "ign-website",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "main": "server.js",
   "keywords": [],
-  "author": "",
+  "author": "gltdevlop",
   "license": "ISC",
   "description": "",
   "dependencies": {
