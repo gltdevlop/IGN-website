@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Sessions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- Navbar horizontale -->
+<div class="navbar">
+    <div class="navbar-left">
+        <img src="icon.ico" alt="Logo" class="navbar-logo">
+        <button data-game="all" id="scoreboard-total">Scoreboard Total</button>
+        <button id="scoreboard-players">Scoreboard Joueurs</button>
+        <button id="scoreboard-games">Scoreboard Jeux</button>
+        <button id="dl">Télécharger</button>
+    </div>
+    <div class="navbar-right">
+        <button id="sort-time" data-order="desc" class="sort-button">Trier par...</button>
+        <input type="text" id="search-player-box" placeholder="Rechercher un joueur...">
+        <input type="text" id="search-game-box" placeholder="Rechercher un jeu...">
+    </div>
+</div>
+
+<div id="welcome-page">
+    <h1>Bienvenue sur IGN - Instagram Note Integration</h1>
+    <p>Suivez et comparez vos temps de jeu</p>
+    <button id="enter-button">Accéder au site</button>
+</div>
+
+<!-- Conteneur principal -->
+<div class="main-container">
+    <!-- Tableau des sessions -->
+    <div class="table-container" id="game-sessions-container">
+        <table id="game-sessions-table">
+            <thead>
+            <tr>
+                <th>Nom du jeu</th>
+                <th>Nom du joueur</th>
+                <th>Durée totale (minutes)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Les données seront insérées ici -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Tableau des joueurs -->
+    <div class="table-container" id="players-sessions-container" style="display: none;">
+        <table id="players-sessions-table">
+            <thead>
+            <tr>
+                <th>Nom du joueur</th>
+                <th>Durée totale (minutes)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Les données seront insérées ici -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Liste des jeux (barre latérale) -->
+    <div class="sidebar" id="game-list">
+        <input type="text" id="search-box" placeholder="Rechercher un jeu...">
+        <ul id="game-list-items">
+            <!-- Les boutons de jeux seront insérés ici -->
+        </ul>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
