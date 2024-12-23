@@ -1,0 +1,19 @@
+name: Create Docker IGN Image
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+     - uses: actions/checkout@v4
+     - name: build push   
+       uses: GlueOps/github-actions-build-push-containers@v0.4.1
+       with:
+         image-name-overwrite: ign-web
+         token: ${{ secrets.GITHUB_TOKEN }}
+         tags: latest
